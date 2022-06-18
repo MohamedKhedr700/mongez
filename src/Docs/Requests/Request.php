@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HZ\Illuminate\Mongez\Docs\Requests;
 
-use Illuminate\Support\Str;
+use HZ\Illuminate\Mongez\Macros\Support\Str;
 use HZ\Illuminate\Mongez\Docs\Directory;
 use HZ\Illuminate\Mongez\Docs\Nodes\Node;
 
@@ -282,16 +282,18 @@ class Request
      * 
      * @param  string $method
      * @param  array $arguments
-     * @return Node
+     * @return Node|null
      */
-    public function __call(string $method, array $arguments): Node
+    public function __call(string $method, array $arguments): ?Node
     {
         if (Str::endsWith($method, 'Node')) {
             $nodeType = Str::beforeLast($method, 'Node');
 
-            $node = conifg('mongez.docs.nodes.' . $nodeType);
+            $node = config('mongez.docs.nodes.' . $nodeType);
 
             return new $node(...$arguments);
         }
+
+        return null;
     }
 }
