@@ -253,12 +253,11 @@ class ModuleBuilder extends EngezGeneratorCommand implements EngezInterface
      */
     protected function createTest()
     {
-        $parent = $this->topParentModule();
         $module = $this->getModule();
 
         $testOptions = [
             'test' => $module,
-            '--module' => $parent,
+            '--module' => $module,
         ];
 
         $this->call('engez:test', $testOptions);
